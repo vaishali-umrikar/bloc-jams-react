@@ -15,7 +15,7 @@ class Album extends Component {
       currentSong: album.songs[0],
       currentTime: 0,
       duration: album.songs[0].duration,
-      currentVolume: 0.8,  
+      currentVolume: 80,  
       isPlaying: false
     };
      
@@ -97,7 +97,8 @@ class Album extends Component {
 
     handleVolumeChange(e) {
       const newVolume = e.target.value;
-      this.audioElement.currentVolume = newVolume;
+      this.audioElement.volume = newVolume;
+      console.log(newVolume);
       this.setState({ currentVolume: newVolume });
     } 
  
