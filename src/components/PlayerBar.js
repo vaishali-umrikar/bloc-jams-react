@@ -17,7 +17,7 @@ import React, { Component } from 'react';
            </button>
          </section>
          <section id="time-control">                                                                    
-          <div className="current-time">{this.props.currentTime}</div>
+          <div className="current-time">{this.props.formatCurrentTime}</div>
            <input 
              type="range" 
              className="seek-bar" 
@@ -27,20 +27,21 @@ import React, { Component } from 'react';
              step="0.01" 
              onChange={this.props.handleTimeChange}
            />   
-           <div className="total-time">{this.props.duration}</div> 
+           <div className="total-time">{this.props.formatRemainingTime}</div> 
          </section>
          <section id="volume-control">
-          <div className="current-volume">{this.props.currentVolume}</div>
+          <div className="icon ion-volume-low"></div>
            <input 
              type="range" 
              className="volume-bar" 
              value= {this.props.currentVolume}
-             max="100" 
+             max="1" 
              min="0" 
-             step="1"
+             step="0.01"
              onChange={this.props.handleVolumeChange} 
            />   
-           <div className="total-time">{this.props.duration}</div> 
+           <div className="icon ion-volume-high"></div> 
+           <div>Volume: {this.props.volumePercent} % </div>
          </section>
        </section>
      );
