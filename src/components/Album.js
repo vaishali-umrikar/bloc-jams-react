@@ -116,45 +116,84 @@ class Album extends Component {
  
   render() {
     return (
-      <section className="album">
-        <section id="album-info">
-          <img id="album-cover-art" src={this.state.album.albumCover} />
-          <div className="album-details">
-           <h1 id="album-title">{this.state.album.title}</h1>
-           <h2 className="artist">{this.state.album.artist}</h2>
-           <div id="release-info">{this.state.album.releaseInfo}</div>
-          </div>
-        </section>
-        <table id="song-list">
-           <colgroup>
-             <col id="song-number-column" />
-             <col id="song-title-column" />
-             <col id="song-duration-column" />
-           </colgroup>  
-           <thead>
-            <tr>
-              <th>Track Number</th>
-              <th>Title</th>
-              <th>Duration</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              this.state.album.songs.map( (song, index) => 
-                <tr className="song" key={index} onClick={() => this.handleSongClick(song)} >
-                  <td className="song-actions">
-                   <button>
-                     <span className="song-number">{index+1}</span>
-                     <span className={this.props.isPlaying ? 'ion-pause' : 'ion-play'}></span>
-                   </button>
-                  </td>
-                  <td className="song-title">{song.title}</td>
-                  <td className="song-duration">{this.formatTime(song.duration)}</td>
-                </tr>
-              )
-            } 
-          </tbody>
-         </table>  
+      <div className="music_player">
+  <div className="artist_img">
+    <img id="album-cover-art" src={this.state.album.albumCover} />
+  </div>
+  <div className="time_slider">
+    <div className="current-time">{this.props.formatCurrentTime}</div>
+        <input 
+            type="range" 
+            className="seek-bar" 
+            value={(this.props.currentTime / this.props.duration) || 0} 
+            max="1" 
+            min="0" 
+            step="0.01" 
+            onChange={this.props.handleTimeChange}
+        />   
+    <div className="total-time">{this.props.formatRemainingTime}</div>
+  </div>
+  <div className="now_playing">
+    <i className="fa fa-refresh" aria-hidden="true"></i>
+    <p>now playing</p>
+    <i className="fa fa-heart" aria-hidden="true"></i>
+  </div>
+  <div className="music_info">
+    <h2 className="artist">{this.state.album.artist}</h2>
+    <p className="date">{this.state.album.releaseInfo}</p>
+    <p className="song_title">{this.state.album.title}</p>
+    <section id="volume-control">
+        <div className="icon ion-volume-low"></div>
+         <input 
+           type="range" 
+           className="volume-bar" 
+           value= {this.props.currentVolume}
+           max="1" 
+           min="0" 
+           step="0.01"
+           onChange={this.props.handleVolumeChange} 
+         />   
+         <div className="icon ion-volume-high"></div> 
+         <div>Volume: {this.props.volumePercent} % </div>
+    </section>
+  </div>
+  <div className="controllers">
+    <button className="fa fa-fast-backward" onClick={this.props.handlePrevClick}>
+        <span className="ion-skip-backward"></span>
+    </button>
+    <button className="fa fa-play" onClick={this.props.handleSongClick} >
+        <span className="ion-play"></span>
+        <span className="ion-pause"></span>
+    </button>
+    <button className="fa fa-fast-forward" onClick={this.props.handleNextClick}>
+        <span className="ion-skip-forward"></span>
+    </button>
+  </div>
+</div>
+ 
+<div className="song_list">
+    {
+        this.state.album.songs.map( (song, index) => 
+            <div className="title" key={index} onClick={() => this.handleSongClick(song)} >
+                <div>{index+1}</div>
+                <div>{song.title}</div>
+                <div>{this.formatTime(song.duration)}</div>
+            </div>
+        )
+    } 
+</div>
+
+  // original template code for song list:
+  // <!-- <div class="title">song name</div>
+  // <div class="title">artist name</div>
+  // <div class="title dark">song name</div>
+  // <div class="title dark">artist name</div>
+  // <div class="title">song name</div>
+  // <div class="title">artist name</div>
+  // <div class="title dark">song name</div>
+  // <div class="title dark">artist name</div>
+  // </div> -->  
+
          <PlayerBar
            isPlaying={this.state.isPlaying}
            currentSong={this.state.currentSong}
@@ -170,7 +209,7 @@ class Album extends Component {
            formatCurrentTime={this.formatTime(this.state.currentTime)}
            formatRemainingTime={this.formatTime(this.state.duration - this.state.currentTime)}
          />
-      </section>
+
     );
   }
 }
