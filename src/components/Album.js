@@ -100,6 +100,7 @@ class Album extends Component {
     handleVolumeChange(e) {
       const newVolume = (e.target.value);
       const newVolumePercent = Math.round((e.target.value)*100);
+      console.log('this', this);
       this.audioElement.volume = newVolume;
       this.setState({ currentVolume: newVolume });
       this.setState({ volumePercent: newVolumePercent});
@@ -116,56 +117,55 @@ class Album extends Component {
  
   render() {
     return (
-      <div className="music_player">
+<div>
+<div className="music_player">
   <div className="artist_img">
     <img id="album-cover-art" src={this.state.album.albumCover} />
   </div>
   <div className="time_slider">
-    <div className="current-time">{this.props.formatCurrentTime}</div>
+    <div className="current-time">{this.formatTime(this.audioElement.currentTime)}</div>
         <input 
             type="range" 
             className="seek-bar" 
-            value={(this.props.currentTime / this.props.duration) || 0} 
+            value={(this.audioElement.currentTime / this.audioElement.duration) || 0} 
             max="1" 
             min="0" 
             step="0.01" 
-            onChange={this.props.handleTimeChange}
+            onChange={(e) => this.handleTimeChange(e)}
         />   
-    <div className="total-time">{this.props.formatRemainingTime}</div>
+    <div className="total-time">{this.formatTime(this.state.duration - this.state.currentTime)}</div>
   </div>
   <div className="now_playing">
-    <i className="fa fa-refresh" aria-hidden="true"></i>
     <p>now playing</p>
-    <i className="fa fa-heart" aria-hidden="true"></i>
   </div>
   <div className="music_info">
     <h2 className="artist">{this.state.album.artist}</h2>
     <p className="date">{this.state.album.releaseInfo}</p>
     <p className="song_title">{this.state.album.title}</p>
     <section id="volume-control">
-        <div className="icon ion-volume-low"></div>
+        <div className="ion-volume-low"></div>
          <input 
            type="range" 
            className="volume-bar" 
-           value= {this.props.currentVolume}
+           value= {this.audioElement.currentVolume}
            max="1" 
            min="0" 
            step="0.01"
-           onChange={this.props.handleVolumeChange} 
+           onChange={(e) => this.handleVolumeChange(e)} 
          />   
-         <div className="icon ion-volume-high"></div> 
-         <div>Volume: {this.props.volumePercent} % </div>
+         <div className="ion-volume-high"></div> 
+         <div className="volume-percent">Volume: {this.state.volumePercent} % </div>
     </section>
   </div>
   <div className="controllers">
-    <button className="fa fa-fast-backward" onClick={this.props.handlePrevClick}>
+    <button onClick={() => this.handlePrevClick(this.state.currentSong)}>
         <span className="ion-skip-backward"></span>
     </button>
-    <button className="fa fa-play" onClick={this.props.handleSongClick} >
+    <button onClick={() => this.handleSongClick(this.state.currentSong)} >
         <span className="ion-play"></span>
         <span className="ion-pause"></span>
     </button>
-    <button className="fa fa-fast-forward" onClick={this.props.handleNextClick}>
+    <button onClick={() => this.handleNextClick(this.state.currentSong)}>
         <span className="ion-skip-forward"></span>
     </button>
   </div>
@@ -175,41 +175,16 @@ class Album extends Component {
     {
         this.state.album.songs.map( (song, index) => 
             <div className="title" key={index} onClick={() => this.handleSongClick(song)} >
-                <div>{index+1}</div>
-                <div>{song.title}</div>
-                <div>{this.formatTime(song.duration)}</div>
+                <div id="track">{index+1}</div>
+                <div id="song-title">{song.title}</div>
+                <div id="duration">{this.formatTime(song.duration)}</div>
             </div>
         )
     } 
 </div>
 
-  // original template code for song list:
-  // <!-- <div class="title">song name</div>
-  // <div class="title">artist name</div>
-  // <div class="title dark">song name</div>
-  // <div class="title dark">artist name</div>
-  // <div class="title">song name</div>
-  // <div class="title">artist name</div>
-  // <div class="title dark">song name</div>
-  // <div class="title dark">artist name</div>
-  // </div> -->  
-
-         <PlayerBar
-           isPlaying={this.state.isPlaying}
-           currentSong={this.state.currentSong}
-           currentTime={this.audioElement.currentTime}
-           duration={this.audioElement.duration}
-           currentVolume={this.audioElement.currentVolume}
-           volumePercent={this.state.volumePercent}
-           handleSongClick={() => this.handleSongClick(this.state.currentSong)}
-           handlePrevClick={() => this.handlePrevClick()}
-           handleNextClick={() => this.handleNextClick()}
-           handleTimeChange={(e) => this.handleTimeChange(e)}
-           handleVolumeChange={(e) => this.handleVolumeChange(e)}
-           formatCurrentTime={this.formatTime(this.state.currentTime)}
-           formatRemainingTime={this.formatTime(this.state.duration - this.state.currentTime)}
-         />
-
+  
+</div>
     );
   }
 }
