@@ -2,7 +2,7 @@
 body {
   font-family: 'Josefin Sans', sans-serif !important;
   margin: 5rem 0 5rem 0;
-  background: #ffa0a0;
+  background: #e8a29c;
   font-family: tahoma;
 }
 body nav a {
@@ -10,10 +10,19 @@ body nav a {
   color: maroon;
 }
 body nav a:visited {
-  color: blue;
+  color: indigo;
 }
 body nav a:hover {
   color: white;
+}
+.point-1 {
+  color: midnightblue;
+}
+.point-2 {
+  color: crimson;
+}
+.point-3 {
+  color: #326f34;
 }
 body .music_player {
   position: relative;
@@ -28,7 +37,7 @@ body .music_player {
 body .music_player .artist_img img {
   height: 13rem;
   float: left;
-  width: 18.5rem;
+  width: 18.6rem;
 }
 body .music_player .time_slider {
   background: #301643;
@@ -53,7 +62,7 @@ body .music_player .time_slider .song_long {
 }
 body .music_player .controllers {
   background: #260F39;
-  height: 3rem;
+  height: 2rem;
   width: 21.4rem;
   position: absolute;
   right: 0;
@@ -61,6 +70,7 @@ body .music_player .controllers {
   font-family: FontAwesome;
   text-align: center;
   color: #83649F;
+  padding-top: 16px;
 }
 body .music_player .controllers i {
   position: relative;
@@ -115,11 +125,19 @@ body .music_info .date {
 body .music_info .song_title {
   color: #E7DF70;
 }
+#volume-control {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.volume-bar {
+  display: inline-block;
+}
 body .music_info .ion-volume-low {
-  float: left;
+  float: right;
 }
 body .music_info .ion-volume-high {
-  float: right;
+  float: left;
 }
 body .music_info .volume-percent {
   padding-top:5px;

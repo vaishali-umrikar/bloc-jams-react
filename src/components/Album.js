@@ -17,7 +17,8 @@ class Album extends Component {
       duration: album.songs[0].duration,
       currentVolume: 0.5,
       volumePercent: 50,  
-      isPlaying: false
+      isPlaying: false,
+      isHovered: false
     };
      
     this.audioElement = document.createElement('audio');
@@ -172,18 +173,16 @@ class Album extends Component {
 </div>
  
 <div className="song_list">
-    {
-        this.state.album.songs.map( (song, index) => 
-            <div className="title" key={index} onClick={() => this.handleSongClick(song)} >
-                <div id="track">{index+1}</div>
-                <div id="song-title">{song.title}</div>
-                <div id="duration">{this.formatTime(song.duration)}</div>
-            </div>
-        )
-    } 
+  {
+    this.state.album.songs.map( (song, index) => 
+      <div className="title" key={index} onClick={() => this.handleSongClick(song)} >
+        <div id="track">{index+1}</div>
+        <div id="song-title">{song.title}</div>
+        <div id="duration">{this.formatTime(song.duration)}</div>
+      </div>
+    )
+  } 
 </div>
-
-  
 </div>
     );
   }
