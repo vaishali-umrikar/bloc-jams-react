@@ -197,7 +197,7 @@ class Album extends Component {
 <div className="song_list">
   {
     this.state.album.songs.map( (song, index) => 
-      <span className="title" key={index} onClick={() => this.handleSongClick(song)} onMouseEnter={() => this.isHovered(song)} onMouseOut={() => this.notHovered(song)} >
+      <span className="title" key={index} onClick={() => this.handleSongClick(song)} onMouseOver={() => this.isHovered(song)} onMouseOut={() => this.notHovered(song)} >
         <span id="track">{this.playPauseButton(index, song)}</span>
         <span id="song-title">{song.title}</span>
         <span id="duration">{this.formatTime(song.duration)}</span>
